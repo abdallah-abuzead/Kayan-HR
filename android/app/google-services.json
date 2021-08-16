@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "734669609793",
+    "project_id": "kayan-hr-82b25",
+    "storage_bucket": "kayan-hr-82b25.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:734669609793:android:7c9d429e4847f5953f1fc0",
+        "android_client_info": {
+          "package_name": "com.abuzead.kayan_hr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "734669609793-pjvhimlgls5h0fldapugr4vs167d1ko4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.abuzead.kayan_hr",
+            "certificate_hash": "34a0d2f80322f6b2109c8a26eb9ea3599f6f11c1"
+          }
+        },
+        {
+          "client_id": "734669609793-9d2afic144a3mormsv16vu0tkg764804.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRFa2DvS0RQM-_wQa6crR6K8DQhGRYEck"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "734669609793-9d2afic144a3mormsv16vu0tkg764804.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
