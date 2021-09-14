@@ -99,6 +99,7 @@ class _LoginState extends State<Login> {
                     onSaved: (value) {
                       email = value;
                     },
+                    keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.email),
                       hintText: tr('email_hint_text'),

@@ -135,6 +135,7 @@ class _SignUpState extends State<SignUp> {
                       if (!emailValid) return tr('validate_email_format');
                       return null;
                     },
+                    keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.email),
                       suffixIcon: Icon(Icons.star_rate_rounded, color: Colors.red.shade500, size: 14),
@@ -174,6 +175,7 @@ class _SignUpState extends State<SignUp> {
                     onSaved: (value) {
                       phone = value;
                     },
+                    keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.phone),
                       hintText: tr('phone_hint_text'),
