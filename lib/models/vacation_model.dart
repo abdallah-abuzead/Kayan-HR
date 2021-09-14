@@ -42,6 +42,11 @@ class VacationModel {
     return vacationsTypes.docs;
   }
 
+  static Future<QueryDocumentSnapshot> getVacation(int vacId) async {
+    var vacation = await _vacationCollection.where('id', isEqualTo: vacId).get();
+    return vacation.docs.first;
+  }
+
   static Future addVacation(Map<String, dynamic> vacation) async {
     await _vacationRequestCollection.add(vacation).then((value) {
       print('vacation added');
