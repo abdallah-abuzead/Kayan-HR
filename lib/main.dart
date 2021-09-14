@@ -1,3 +1,5 @@
+// import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:kayan_hr/components/current_user_rule_data.dart';
@@ -26,12 +28,25 @@ import 'screens/vacations_types.dart';
 import 'screens/edit_employee.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:connectivity_plus/connectivity_plus.dart';
+// import 'package:connectivity/connectivity.dart';
 
 bool isLogin = false;
 num rule = 0;
 FirebaseMessaging fcm = FirebaseMessaging.instance;
 
 void main() async {
+  //=============== check connectivity ==================
+  // try {
+  //   final result = await InternetAddress.lookup('google.com');
+  //   if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+  //     print('connected');
+  //   }
+  // } on SocketException catch (_) {
+  //   print('not connected');
+  // }
+  //=====================================================
+
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
@@ -40,13 +55,16 @@ void main() async {
   if (isLogin) {
     final employee = await EmployeeModel.getEmployeeByEmail(UserModel.currentUserEmail);
     rule = employee['rule_id'];
-    print('===================');
-    fcm.getToken().then((value) => print(value));
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      if (message.notification != null) {
-        print(message.notification!.title);
-      }
-    });
+
+    //============= notifications ==================
+    // print('===================');
+    // fcm.getToken().then((value) => print(value));
+    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    //   if (message.notification != null) {
+    //     print(message.notification!.title);
+    //   }
+    // });
+    //===============================================
   }
   runApp(
     EasyLocalization(
@@ -63,6 +81,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = ThemeData();
     return ChangeNotifierProvider<CurrentUserRule>(
       create: (context) => CurrentUserRule(),
       builder: (context, child) {
@@ -97,9 +116,9 @@ class MyApp extends StatelessWidget {
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,
-          theme: ThemeData(
+          theme: theme.copyWith(
             primaryColor: kMainColor,
-            accentColor: kMainColor,
+            appBarTheme: AppBarTheme(color: kMainColor),
             bottomNavigationBarTheme: BottomNavigationBarThemeData(
               backgroundColor: kMainColor,
               elevation: 10,

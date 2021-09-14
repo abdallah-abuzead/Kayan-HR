@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kayan_hr/components/selected_employees_data.dart';
+import 'package:kayan_hr/constants.dart';
 import 'package:provider/provider.dart';
 
 class EmployeeCheckbox extends StatefulWidget {
@@ -21,6 +22,7 @@ class _EmployeeCheckboxState extends State<EmployeeCheckbox> {
         return CheckboxListTile(
           title: Text((widget.employee.data() as Map)['name']),
           value: isChecked,
+          activeColor: kMainColor,
           onChanged: (value) {
             setState(() {
               isChecked = value;
