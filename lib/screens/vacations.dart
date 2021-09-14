@@ -10,6 +10,7 @@ import 'package:kayan_hr/models/vacation_model.dart';
 import 'package:kayan_hr/screens/edit_vacation.dart';
 import 'package:kayan_hr/screens/employee_vacations.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:kayan_hr/screens/homepage.dart';
 import 'package:provider/provider.dart';
 
 class Vacations extends StatefulWidget {
@@ -195,12 +196,24 @@ class _VacationsState extends State<Vacations> {
                                                       Navigator.of(context).pop();
                                                       showSpinner(context);
                                                       await VacationModel.deleteVacation(vacations[i]['doc_id']);
-                                                      Navigator.of(context).pop();
-                                                      Navigator.pushReplacementNamed(
-                                                        context,
-                                                        EmployeeVacations.id,
-                                                        arguments: await EmployeeModel.getEmployeeById(widget.empId),
+
+                                                      ScaffoldMessenger.of(context).showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(tr('delete_vacation_indicator')),
+                                                          backgroundColor: Colors.redAccent.shade100,
+                                                          duration: Duration(seconds: 2),
+                                                        ),
                                                       );
+
+                                                      Navigator.pushNamedAndRemoveUntil(
+                                                          context, HomePage.id, (route) => false);
+                                                      Future.delayed(Duration.zero, () async {
+                                                        Navigator.pushNamed(
+                                                          context,
+                                                          EmployeeVacations.id,
+                                                          arguments: await EmployeeModel.getEmployeeById(widget.empId),
+                                                        );
+                                                      });
                                                     },
                                                   );
                                                 },

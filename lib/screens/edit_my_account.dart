@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kayan_hr/components/current_user_rule_data.dart';
+import 'package:kayan_hr/components/show_snack_bar.dart';
 import 'package:kayan_hr/components/spinner.dart';
 import 'package:kayan_hr/components/validation_error.dart';
 import 'package:kayan_hr/models/employee_model.dart';
@@ -61,6 +62,8 @@ class _EditMyAccountState extends State<EditMyAccount> {
             'updated_at': DateTime.now().millisecondsSinceEpoch,
           },
         );
+
+        successSnackBar(context, tr('edit_my_account_indicator'));
         Navigator.of(context).pushNamedAndRemoveUntil(HomePage.id, (route) => false);
       }
     }
@@ -149,6 +152,7 @@ class _EditMyAccountState extends State<EditMyAccount> {
                             if (!emailValid) return tr('validate_email_format');
                             return null;
                           },
+                          keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.email),
                             suffixIcon: Icon(Icons.star_rate_rounded, color: Colors.red.shade500, size: 14),
@@ -168,6 +172,7 @@ class _EditMyAccountState extends State<EditMyAccount> {
                           onSaved: (value) {
                             phone = value;
                           },
+                          keyboardType: TextInputType.phone,
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.phone),
                             hintText: tr('phone_hint_text'),

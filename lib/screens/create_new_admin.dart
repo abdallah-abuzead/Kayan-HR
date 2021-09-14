@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:kayan_hr/components/show_snack_bar.dart';
 import 'package:kayan_hr/components/spinner.dart';
 import 'package:kayan_hr/components/validation_error.dart';
 import 'package:kayan_hr/models/employee_model.dart';
@@ -69,6 +70,8 @@ class _CreateNewAdminState extends State<CreateNewAdmin> {
               email: currentUserEmail,
               password: currentUser['password'],
             );
+
+            successSnackBar(context, tr('new_admin_indicator'));
             Navigator.of(context).pushNamedAndRemoveUntil(HomePage.id, (route) => false);
           }
         } on FirebaseAuthException catch (e) {
@@ -139,6 +142,7 @@ class _CreateNewAdminState extends State<CreateNewAdmin> {
                       if (!emailValid) return tr('validate_email_format');
                       return null;
                     },
+                    keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.email),
                       suffixIcon: Icon(Icons.star_rate_rounded, color: Colors.red.shade500, size: 14),

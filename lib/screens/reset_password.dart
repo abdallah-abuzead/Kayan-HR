@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:kayan_hr/components/show_snack_bar.dart';
 import 'package:kayan_hr/components/spinner.dart';
 import 'package:kayan_hr/components/validation_error.dart';
 import 'package:kayan_hr/models/user_model.dart';
@@ -35,6 +36,9 @@ class _ResetPasswordState extends State<ResetPassword> {
       } else {
         await UserModel.resetPassword(currentPassword, newPassword);
         await UserModel.updateUser(user.id, {'password': newPassword});
+
+        successSnackBar(context, tr('reset_password_indicator'));
+
         Navigator.of(context).pushNamedAndRemoveUntil(HomePage.id, (route) => false);
       }
     }

@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kayan_hr/components/loading.dart';
+import 'package:kayan_hr/components/show_snack_bar.dart';
 import 'package:kayan_hr/components/validation_error.dart';
 import 'package:kayan_hr/models/employee_model.dart';
 import 'package:kayan_hr/models/user_model.dart';
@@ -103,6 +104,7 @@ class _EditEmployeeState extends State<EditEmployee> {
                             if (!emailValid) return tr('validate_email_format');
                             return null;
                           },
+                          keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.email),
                             suffixIcon: Icon(Icons.star_rate_rounded, color: Colors.red.shade500, size: 14),
@@ -199,6 +201,7 @@ class _EditEmployeeState extends State<EditEmployee> {
                                   {'email': newEmail, 'updated_at': DateTime.now().millisecondsSinceEpoch},
                                 );
 
+                                successSnackBar(context, tr('edit_employee_indicator'));
                                 Navigator.of(context).pushNamedAndRemoveUntil(HomePage.id, (route) => false);
                                 Navigator.pushNamed(context, Employees.id);
                               }

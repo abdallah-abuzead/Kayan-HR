@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kayan_hr/components/current_user_rule_data.dart';
+import 'package:kayan_hr/components/show_snack_bar.dart';
 import 'package:kayan_hr/components/spinner.dart';
 import 'package:kayan_hr/components/employees_checkbox_list.dart';
 import 'package:kayan_hr/components/selected_employees_data.dart';
@@ -41,7 +42,7 @@ class _RegisterVacationState extends State<RegisterVacation> {
   var format = DateFormat('dd/MM/yyyy');
   late DocumentSnapshot employee;
 
-  void getEmployees() async {
+  Future getEmployees() async {
     employeesDocs = await EmployeeModel.getAllEmployees();
     employeesDropdownItems = employeesDocs.map<DropdownMenuItem<String>>((employee) {
       return DropdownMenuItem<String>(
@@ -54,7 +55,7 @@ class _RegisterVacationState extends State<RegisterVacation> {
     });
   }
 
-  void getVacations() async {
+  Future getVacations() async {
     final vacationsTypesDocs = await VacationModel.getVacationsTypes();
     vacationsDropdownItems = vacationsTypesDocs.map<DropdownMenuItem<String>>((vacation) {
       return DropdownMenuItem<String>(
@@ -67,7 +68,7 @@ class _RegisterVacationState extends State<RegisterVacation> {
     });
   }
 
-  void registerVacation(String empId, int noOfDays) async {
+  Future registerVacation(BuildContext context, String empId, int noOfDays, var statusId) async {
     final currentEmployee = await EmployeeModel.getEmployeeByEmail(UserModel.currentUserEmail);
     await VacationModel.addVacation({
       'emp_id': empId,
@@ -75,7 +76,7 @@ class _RegisterVacationState extends State<RegisterVacation> {
       'start_date': startDate,
       'end_date': endDate,
       'no_of_days': noOfDays,
-      'status_id': Provider.of<CurrentUserRule>(context, listen: false).rule >= 3 ? 2 : 1,
+      'status_id': statusId,
       'created_by': currentEmployee.id,
       'updated_by': currentEmployee.id,
       'created_at': DateTime.now().millisecondsSinceEpoch,
@@ -86,8 +87,10 @@ class _RegisterVacationState extends State<RegisterVacation> {
   @override
   void initState() {
     super.initState();
-    getEmployees();
-    getVacations();
+    Future.delayed(Duration.zero, () async {
+      await getEmployees();
+      await getVacations();
+    });
   }
 
   @override
@@ -274,16 +277,24 @@ class _RegisterVacationState extends State<RegisterVacation> {
                               });
                             } else {
                               showSpinner(context);
-                              if (selectedVacationId == '5' && args == null) {
-                                List<String> selectedEmployees =
-                                    Provider.of<SelectedEmployeesData>(context, listen: false).selectedEmployeesIds;
-                                selectedEmployees.forEach((employeeId) async {
-                                  registerVacation(employeeId, noOfDays);
-                                });
-                              } else
-                                registerVacation(selectedEmployeeId, noOfDays);
-
                               var rule = Provider.of<CurrentUserRule>(context, listen: false).rule;
+
+                              // register vacation
+                              if (selectedVacationId == '5' && args == null) {
+                                List<String> selectedEmployeesIds =
+                                    Provider.of<SelectedEmployeesData>(context, listen: false).selectedEmployeesIds;
+                                selectedEmployeesIds.forEach((employeeId) async {
+                                  await registerVacation(context, employeeId, noOfDays, rule >= 3 ? 2 : 1);
+                                });
+                              } else {
+                                await registerVacation(context, selectedEmployeeId, noOfDays, rule >= 3 ? 2 : 1);
+                              }
+
+                              Navigator.pop(context);
+
+                              successSnackBar(context, tr('register_vacation_indicator'));
+
+                              // Navigate to...
                               if (rule >= 3)
                                 Navigator.of(context).pushNamedAndRemoveUntil(HomePage.id, (route) => false);
                               else if (rule == 1)

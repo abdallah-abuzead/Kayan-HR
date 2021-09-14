@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kayan_hr/components/loading.dart';
+import 'package:kayan_hr/components/show_snack_bar.dart';
 import 'package:kayan_hr/models/employee_model.dart';
 import 'package:kayan_hr/models/rule_model.dart';
 import 'package:kayan_hr/screens/users.dart';
@@ -117,6 +118,8 @@ class _EditUserRuleState extends State<EditUserRule> {
                               'updated_at': DateTime.now().millisecondsSinceEpoch,
                             },
                           );
+
+                          successSnackBar(context, tr('edit_user_rule_indicator'));
                           Navigator.of(context).pushNamedAndRemoveUntil(HomePage.id, (route) => false);
                           Navigator.pushNamed(context, Users.id);
                         },

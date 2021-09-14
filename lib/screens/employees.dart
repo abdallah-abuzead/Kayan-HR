@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kayan_hr/components/current_user_rule_data.dart';
 import 'package:kayan_hr/components/loading.dart';
 import 'package:kayan_hr/components/show_alert_dialog.dart';
+import 'package:kayan_hr/components/show_snack_bar.dart';
 import 'package:kayan_hr/constants.dart';
 import 'package:kayan_hr/models/employee_model.dart';
 import 'package:kayan_hr/screens/edit_employee.dart';
@@ -140,6 +141,9 @@ class _EmployeesState extends State<Employees> {
                                                     showSpinner(context);
                                                     await EmployeeModel.deleteEmployee(
                                                         employees[i].id, employees[i]['image_url']);
+
+                                                    dangerSnackBar(context, tr('delete_employee_indicator'));
+
                                                     Navigator.of(context)
                                                         .pushNamedAndRemoveUntil(HomePage.id, (route) => false);
                                                     Navigator.pushNamed(context, Employees.id);

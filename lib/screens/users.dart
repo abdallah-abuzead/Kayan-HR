@@ -175,6 +175,15 @@ class _UsersState extends State<Users> {
                                                       Navigator.of(context).pop();
                                                       showSpinner(context);
                                                       await UserModel.deleteUser(users[i]['email']);
+
+                                                      ScaffoldMessenger.of(context).showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(tr('delete_user_indicator')),
+                                                          backgroundColor: Colors.redAccent.shade100,
+                                                          duration: Duration(seconds: 2),
+                                                        ),
+                                                      );
+
                                                       Navigator.of(context)
                                                           .pushNamedAndRemoveUntil(HomePage.id, (route) => false);
                                                       Navigator.pushNamed(context, Users.id);

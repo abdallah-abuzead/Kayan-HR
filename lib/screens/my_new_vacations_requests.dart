@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kayan_hr/components/loading.dart';
 import 'package:kayan_hr/components/show_alert_dialog.dart';
+import 'package:kayan_hr/components/show_snack_bar.dart';
 import 'package:kayan_hr/constants.dart';
 import 'package:kayan_hr/models/employee_model.dart';
 import 'package:kayan_hr/models/user_model.dart';
@@ -32,32 +33,17 @@ class _MyNewVacationsRequestsState extends State<MyNewVacationsRequests> {
     });
     requestsDocs.forEach((request) async {
       var createdBy = await EmployeeModel.getEmployeeById(request['created_by']);
+      var vacation = await VacationModel.getVacation(request['vac_id']);
       setState(() {
         vacationsRequests.add({
           'doc_id': request.id,
           'employee_name': currentEmployee['name'],
           'created_by_name': createdBy['name'],
+          'vac_type': vacation['type'],
           ...request.data() as Map,
         });
       });
     });
-  }
-
-  String getVacationName(int vacId) {
-    switch (vacId) {
-      case 1:
-        return context.locale.toString() == 'ar_DZ' ? 'سنوية' : 'annual';
-      case 2:
-        return context.locale.toString() == 'ar_DZ' ? 'عارضة' : 'casual';
-      case 3:
-        return context.locale.toString() == 'ar_DZ' ? 'مرضى' : 'sick';
-      case 4:
-        return context.locale.toString() == 'ar_DZ' ? 'منحة' : 'grant';
-      case 5:
-        return context.locale.toString() == 'ar_DZ' ? 'Rotation' : 'rotation';
-      default:
-        return '';
-    }
   }
 
   @override
@@ -116,7 +102,7 @@ class _MyNewVacationsRequestsState extends State<MyNewVacationsRequests> {
                                   ),
                                   Text(kVacationLabelsPostfix, style: kVacationLabelsTextStyle),
                                   Text(
-                                    getVacationName(vacationsRequests[i]['vac_id']),
+                                    tr(vacationsRequests[i]['vac_type']),
                                     style: kVacationDataTextStyle,
                                   ),
                                 ],
@@ -205,6 +191,9 @@ class _MyNewVacationsRequestsState extends State<MyNewVacationsRequests> {
                                         actionButtonOnPressed: () async {
                                           showSpinner(context);
                                           await VacationModel.deleteVacation(vacationsRequests[i]['doc_id']);
+
+                                          dangerSnackBar(context, tr('delete_vacation_request_indicator'));
+
                                           Navigator.pushNamedAndRemoveUntil(
                                               context, EmployeeHomePage.id, (route) => false);
                                           Navigator.pushNamed(context, MyNewVacationsRequests.id);

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kayan_hr/components/loading.dart';
 import 'package:kayan_hr/components/show_alert_dialog.dart';
+import 'package:kayan_hr/components/show_snack_bar.dart';
 import 'package:kayan_hr/constants.dart';
 import 'package:kayan_hr/models/employee_model.dart';
 import 'package:kayan_hr/models/user_model.dart';
@@ -32,32 +33,18 @@ class _NewVacationsRequestsState extends State<NewVacationsRequests> {
     requestsDocs.forEach((request) async {
       var employee = await EmployeeModel.getEmployeeById(request['emp_id']);
       var createdBy = await EmployeeModel.getEmployeeById(request['created_by']);
+      var vacation = await VacationModel.getVacation(request['vac_id']);
+
       setState(() {
         vacationsRequests.add({
           'doc_id': request.id,
           'employee_name': employee['name'],
           'created_by_name': createdBy['name'],
+          'vac_type': vacation['type'],
           ...request.data() as Map,
         });
       });
     });
-  }
-
-  String getVacationName(int vacId) {
-    switch (vacId) {
-      case 1:
-        return context.locale.toString() == 'ar_DZ' ? 'سنوية' : 'annual';
-      case 2:
-        return context.locale.toString() == 'ar_DZ' ? 'عارضة' : 'casual';
-      case 3:
-        return context.locale.toString() == 'ar_DZ' ? 'مرضى' : 'sick';
-      case 4:
-        return context.locale.toString() == 'ar_DZ' ? 'منحة' : 'grant';
-      case 5:
-        return context.locale.toString() == 'ar_DZ' ? 'Rotation' : 'rotation';
-      default:
-        return '';
-    }
   }
 
   @override
@@ -143,7 +130,7 @@ class _NewVacationsRequestsState extends State<NewVacationsRequests> {
                                         ),
                                         Text(kVacationLabelsPostfix, style: kVacationLabelsTextStyle),
                                         Text(
-                                          getVacationName(vacationsRequests[i]['vac_id']),
+                                          tr(vacationsRequests[i]['vac_type']),
                                           style: kVacationDataTextStyle,
                                         ),
                                       ],
@@ -228,6 +215,9 @@ class _NewVacationsRequestsState extends State<NewVacationsRequests> {
                                                 'updated_at': DateTime.now().millisecondsSinceEpoch,
                                               },
                                             );
+
+                                            successSnackBar(context, tr('accept_vacation_request_indicator'));
+
                                             Navigator.pushNamedAndRemoveUntil(context, HomePage.id, (route) => false);
                                             Navigator.pushNamed(context, NewVacationsRequests.id);
                                           },
@@ -244,7 +234,7 @@ class _NewVacationsRequestsState extends State<NewVacationsRequests> {
                                           },
                                         ),
                                         OutlinedButton(
-                                          child: Text(tr('delete_button')),
+                                          child: Text(tr('reject_button')),
                                           style: OutlinedButton.styleFrom(
                                             backgroundColor: Colors.red.shade600,
                                             primary: Colors.white,
@@ -252,10 +242,13 @@ class _NewVacationsRequestsState extends State<NewVacationsRequests> {
                                           onPressed: () {
                                             showAlertDialog(
                                               context: context,
-                                              title: tr('delete_vacation_request_alert'),
+                                              title: tr('reject_vacation_request_alert'),
                                               actionButtonOnPressed: () async {
                                                 showSpinner(context);
                                                 await VacationModel.deleteVacation(vacationsRequests[i]['doc_id']);
+
+                                                dangerSnackBar(context, tr('reject_vacation_request_indicator'));
+
                                                 Navigator.pushNamedAndRemoveUntil(
                                                     context, HomePage.id, (route) => false);
                                                 Navigator.pushNamed(context, NewVacationsRequests.id);

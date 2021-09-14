@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kayan_hr/components/show_snack_bar.dart';
 import 'package:kayan_hr/components/spinner.dart';
 import 'package:kayan_hr/components/validation_error.dart';
 import 'package:kayan_hr/models/employee_model.dart';
@@ -226,6 +227,9 @@ class _EditVacationState extends State<EditVacation> {
                               'updated_at': DateTime.now().millisecondsSinceEpoch,
                             },
                           );
+
+                          successSnackBar(context, tr('edit_vacation_indicator'));
+
                           if (args['status_id'] == 2) {
                             // admin edited in a registered vacation
                             Navigator.of(context).pushNamedAndRemoveUntil(HomePage.id, (route) => false);
