@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kayan_hr/components/current_user_rule_data.dart';
+import 'package:kayan_hr/components/current_user_data.dart';
 import 'package:kayan_hr/constants.dart';
 import 'package:kayan_hr/screens/employee_homepage.dart';
 import 'package:provider/provider.dart';
@@ -63,7 +63,7 @@ class _EmployeeVacationsState extends State<EmployeeVacations> {
             switch (i) {
               case 0:
                 Navigator.of(context).pushNamedAndRemoveUntil(
-                  Provider.of<CurrentUserRule>(context, listen: false).rule >= 3 ? HomePage.id : EmployeeHomePage.id,
+                  Provider.of<CurrentUserData>(context, listen: false).rule >= 3 ? HomePage.id : EmployeeHomePage.id,
                   (route) => false,
                 );
                 break;

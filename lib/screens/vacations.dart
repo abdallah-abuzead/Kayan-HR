@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:kayan_hr/components/current_user_rule_data.dart';
+import 'package:kayan_hr/components/current_user_data.dart';
 import 'package:kayan_hr/components/loading.dart';
 import 'package:kayan_hr/components/show_alert_dialog.dart';
 import 'package:kayan_hr/components/spinner.dart';
@@ -172,7 +172,7 @@ class _VacationsState extends State<Vacations> {
                                         ),
                                       ],
                                     ),
-                                    Provider.of<CurrentUserRule>(context).rule < 3
+                                    Provider.of<CurrentUserData>(context).rule < 3
                                         ? Container(width: double.minPositive)
                                         : Row(
                                             children: [

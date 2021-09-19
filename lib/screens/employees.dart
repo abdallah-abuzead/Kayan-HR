@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kayan_hr/components/current_user_rule_data.dart';
+import 'package:kayan_hr/components/current_user_data.dart';
 import 'package:kayan_hr/components/loading.dart';
 import 'package:kayan_hr/components/show_alert_dialog.dart';
 import 'package:kayan_hr/components/show_snack_bar.dart';
@@ -108,7 +108,7 @@ class _EmployeesState extends State<Employees> {
                                 padding: const EdgeInsets.only(top: 5),
                                 child: Text(employees[i]['email']),
                               ),
-                              trailing: Provider.of<CurrentUserRule>(context).rule < 3
+                              trailing: Provider.of<CurrentUserData>(context).rule < 3
                                   ? Container(width: double.minPositive)
                                   : Column(
                                       mainAxisAlignment: MainAxisAlignment.end,

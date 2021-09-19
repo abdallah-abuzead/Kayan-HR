@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:kayan_hr/components/current_user_rule_data.dart';
+import 'package:kayan_hr/components/current_user_data.dart';
 import 'package:kayan_hr/components/show_snack_bar.dart';
 import 'package:kayan_hr/components/spinner.dart';
 import 'package:kayan_hr/components/employees_checkbox_list.dart';
@@ -277,7 +277,7 @@ class _RegisterVacationState extends State<RegisterVacation> {
                               });
                             } else {
                               showSpinner(context);
-                              var rule = Provider.of<CurrentUserRule>(context, listen: false).rule;
+                              var rule = Provider.of<CurrentUserData>(context, listen: false).rule;
 
                               // register vacation
                               if (selectedVacationId == '5' && args == null) {
