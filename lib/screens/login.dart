@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:kayan_hr/components/current_user_rule_data.dart';
+import 'package:kayan_hr/components/current_user_data.dart';
 import 'package:kayan_hr/components/spinner.dart';
 import 'package:kayan_hr/components/validation_error.dart';
 import 'package:kayan_hr/models/employee_model.dart';
@@ -40,7 +40,7 @@ class _LoginState extends State<Login> {
       );
       if (userCredential.credential == null) {
         final employee = await EmployeeModel.getEmployeeByEmail(email);
-        Provider.of<CurrentUserRule>(context, listen: false).set(employee['rule_id']);
+        Provider.of<CurrentUserData>(context, listen: false).setRule(employee['rule_id']);
         Navigator.of(context).pushNamedAndRemoveUntil(
           employee['rule_id'] >= 3 ? HomePage.id : EmployeeHomePage.id,
           (route) => false,
