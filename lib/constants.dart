@@ -16,8 +16,8 @@ const MaterialColor _buttonTextColor = MaterialColor(0xFFC41A3B, {
 });
 
 final kShowDatePickerTheme = ThemeData(
-  primaryColor: kMainColor,
-  accentColor: kMainColor,
+  // primaryColor: kMainColor,
+  // colorScheme: ColorScheme.fromSwatch().copyWith(secondary: kMainColor),
   primarySwatch: _buttonTextColor,
 );
 
@@ -41,6 +41,12 @@ const kTabsTextStyle = TextStyle(
 const kVacationLabelsTextStyle = TextStyle(
   fontWeight: FontWeight.bold,
   fontSize: 15,
+);
+
+final kUserDataTextStyle = TextStyle(
+  fontWeight: FontWeight.bold,
+  fontSize: 15,
+  color: Colors.blueGrey.shade200,
 );
 
 const kVacationLabelsWidth = 85.0;

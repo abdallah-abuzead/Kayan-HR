@@ -7,4 +7,9 @@ class RuleModel {
     final rules = await _ruleCollection.where('id', whereIn: [1, 2]).get();
     return rules.docs;
   }
+
+  static Future<String> getRuleName(num ruleId) async {
+    final rule = await _ruleCollection.where('id', isEqualTo: ruleId).get();
+    return rule.docs.first['rule'];
+  }
 }

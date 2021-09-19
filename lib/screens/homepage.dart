@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:kayan_hr/components/current_user_rule_data.dart';
+import 'package:kayan_hr/components/current_user_data.dart';
 import 'package:kayan_hr/components/loading.dart';
+import 'package:kayan_hr/components/side_drawer.dart';
 import 'package:kayan_hr/models/employee_model.dart';
 import 'package:kayan_hr/models/vacation_model.dart';
 import 'package:kayan_hr/screens/add_employee.dart';
@@ -10,7 +11,7 @@ import 'package:provider/provider.dart';
 import 'register_vacation.dart';
 import 'package:kayan_hr/constants.dart';
 import 'employee_vacations.dart';
-import 'package:kayan_hr/components/menu_button.dart';
+// import 'package:kayan_hr/components/menu_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class HomePage extends StatefulWidget {
@@ -67,13 +68,14 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(tr('home_title')),
-        actions: [MenuButton()],
+        // actions: [MenuButton()],
       ),
+      drawer: SideDrawer(context),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (i) {
           switch (i) {
             case 0:
-              Provider.of<CurrentUserRule>(context, listen: false).rule >= 3
+              Provider.of<CurrentUserData>(context, listen: false).rule >= 3
                   ? Navigator.pushNamed(context, AddEmployee.id)
                   : Navigator.pushNamedAndRemoveUntil(context, EmployeeHomePage.id, (route) => false);
               break;
@@ -83,7 +85,7 @@ class _HomePageState extends State<HomePage> {
           }
         },
         items: [
-          Provider.of<CurrentUserRule>(context, listen: false).rule >= 3
+          Provider.of<CurrentUserData>(context, listen: false).rule >= 3
               ? BottomNavigationBarItem(
                   icon: Icon(Icons.add),
                   label: tr('add_employee'),

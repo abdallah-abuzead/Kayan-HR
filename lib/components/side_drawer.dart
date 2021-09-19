@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:kayan_hr/components/current_user_data.dart';
 import 'package:kayan_hr/components/show_alert_dialog.dart';
+import 'package:kayan_hr/constants.dart';
 import 'package:kayan_hr/models/user_model.dart';
 import 'package:kayan_hr/screens/create_new_admin.dart';
 import 'package:kayan_hr/screens/edit_my_account.dart';
@@ -17,7 +20,10 @@ import 'package:kayan_hr/screens/welcome.dart';
 import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class MenuButton extends StatelessWidget {
+class SideDrawer extends StatelessWidget {
+  SideDrawer(this.homeContext);
+  final BuildContext homeContext;
+
   late final List<String?> choices;
   late final String? refresh,
       vacationsRequests,
@@ -143,13 +149,13 @@ class MenuButton extends StatelessWidget {
     else if (choice == resetPassword)
       Navigator.pushNamed(context, ResetPassword.id);
     else if (choice == deleteMyAccount)
-      deleteMyAccountDialog(context);
+      deleteMyAccountDialog(homeContext);
     else if (choice == signOut) {
       showSpinner(context);
       await UserModel.signOut();
       Navigator.of(context).pushNamedAndRemoveUntil(Welcome.id, (route) => false);
     } else
-      resetVacationsDialog(context);
+      resetVacationsDialog(homeContext);
   }
 
   void deleteMyAccountDialog(BuildContext context) {
@@ -191,39 +197,84 @@ class MenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Map currentUser = Provider.of<CurrentUserData>(context).currentUser;
     initChoices(context);
-    return PopupMenuButton(
-      onSelected: (choice) {
-        getChoiceAction(context, choice.toString());
-      },
-      itemBuilder: (context) {
-        return choices.map((choice) {
-          return PopupMenuItem(
-            padding: choice == choices.last
-                ? EdgeInsets.only(bottom: 5, left: 15, right: 15)
-                : EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-            height: 0,
+
+    return Drawer(
+      elevation: 5,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            padding: EdgeInsets.only(left: 10, right: 10, top: 30, bottom: 10),
+            decoration: BoxDecoration(color: kMainColor),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(
+                    tr('welcome') + ' ' + currentUser['name'].split(' ')[0],
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
+                  ),
+                  leading: currentUser['image_url'] == ''
+                      ? CircleAvatar(radius: 30, backgroundImage: AssetImage('images/avatar.png'))
+                      : CircleAvatar(radius: 30, backgroundImage: NetworkImage(currentUser['image_url'])),
+                ),
+                SizedBox(height: 10),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('$choice'),
-                    getChoiceIcon('$choice'),
+                    Icon(Icons.rule, size: 20, color: Colors.blueGrey.shade100),
+                    SizedBox(width: 15),
+                    Text(tr(currentUser['rule_name']), style: kUserDataTextStyle),
                   ],
                 ),
-                choice == choices.last
+                Row(
+                  children: [
+                    Icon(Icons.email, size: 20, color: Colors.blueGrey.shade100),
+                    SizedBox(width: 15),
+                    Text(currentUser['email'], style: kUserDataTextStyle),
+                  ],
+                ),
+                currentUser['phone'] == ''
                     ? Container()
-                    : Padding(
-                        padding: const EdgeInsets.only(top: 5),
-                        child: Divider(thickness: 2, height: 10),
+                    : Row(
+                        children: [
+                          Icon(Icons.phone, size: 20, color: Colors.blueGrey.shade100),
+                          SizedBox(width: 15),
+                          Text(currentUser['phone'], style: kUserDataTextStyle),
+                        ],
                       ),
               ],
             ),
-            value: choice,
-          );
-        }).toList();
-      },
+          ),
+          Expanded(
+            child: ListView.separated(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              itemCount: choices.length,
+              separatorBuilder: (context, i) {
+                return Divider(
+                  thickness: 2,
+                  height: 0,
+                );
+              },
+              itemBuilder: (context, i) {
+                return ListTile(
+                  title: Text('${choices[i]}', style: TextStyle(fontSize: 16)),
+                  trailing: getChoiceIcon('${choices[i]}'),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                  hoverColor: Colors.grey.shade300,
+                  visualDensity: VisualDensity.compact,
+                  onTap: () {
+                    Navigator.pop(context);
+                    getChoiceAction(context, choices[i].toString());
+                  },
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

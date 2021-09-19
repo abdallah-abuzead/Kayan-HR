@@ -1,9 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:kayan_hr/components/current_user_rule_data.dart';
+import 'package:kayan_hr/components/current_user_data.dart';
 import 'package:kayan_hr/components/loading.dart';
-import 'package:kayan_hr/components/menu_button.dart';
+// import 'package:kayan_hr/components/menu_button.dart';
+import 'package:kayan_hr/components/side_drawer.dart';
 import 'package:kayan_hr/constants.dart';
 import 'package:badges/badges.dart';
 import 'package:kayan_hr/models/employee_model.dart';
@@ -56,9 +57,10 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(tr('employee_home_title')),
-        actions: [MenuButton()],
+        // actions: [MenuButton()],
       ),
-      bottomNavigationBar: Provider.of<CurrentUserRule>(context, listen: false).rule != 2
+      drawer: SideDrawer(context),
+      bottomNavigationBar: Provider.of<CurrentUserData>(context, listen: false).rule != 2
           ? null
           : BottomNavigationBar(
               onTap: (i) {
@@ -168,7 +170,7 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
                     ],
                   ),
           ),
-          Provider.of<CurrentUserRule>(context, listen: false).rule == 2
+          Provider.of<CurrentUserData>(context, listen: false).rule == 2
               ? Container()
               : ElevatedButton(
                   child: Column(
