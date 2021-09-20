@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kayan_hr/components/loading.dart';
+import 'package:kayan_hr/components/cookbooks/loading.dart';
 import 'package:kayan_hr/models/vacation_model.dart';
 
 class VacationsTypes extends StatefulWidget {

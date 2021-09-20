@@ -2,8 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kayan_hr/screens/login.dart';
-import 'package:kayan_hr/screens/sign_up.dart';
+import 'package:kayan_hr/screens/auth/login.dart';
+import 'package:kayan_hr/screens/auth/sign_up.dart';
 
 class Welcome extends StatefulWidget {
   static const String id = 'welcome';

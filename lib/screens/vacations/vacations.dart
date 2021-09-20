@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:kayan_hr/components/current_user_data.dart';
-import 'package:kayan_hr/components/loading.dart';
-import 'package:kayan_hr/components/show_alert_dialog.dart';
-import 'package:kayan_hr/components/spinner.dart';
+import 'package:kayan_hr/components/providers/current_user_data_provider.dart';
+import 'package:kayan_hr/components/cookbooks/loading.dart';
+import 'package:kayan_hr/components/cookbooks/show_alert_dialog.dart';
+import 'package:kayan_hr/components/cookbooks/spinner.dart';
 import 'package:kayan_hr/constants.dart';
 import 'package:kayan_hr/models/employee_model.dart';
 import 'package:kayan_hr/models/vacation_model.dart';
-import 'package:kayan_hr/screens/edit_vacation.dart';
-import 'package:kayan_hr/screens/employee_vacations.dart';
+import 'package:kayan_hr/screens/vacations/edit_vacation.dart';
+import 'package:kayan_hr/screens/vacations/employee_vacations.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:kayan_hr/screens/homepage.dart';
+import 'package:kayan_hr/screens/homepage/homepage.dart';
 import 'package:provider/provider.dart';
 
 class Vacations extends StatefulWidget {
@@ -172,7 +172,7 @@ class _VacationsState extends State<Vacations> {
                                         ),
                                       ],
                                     ),
-                                    Provider.of<CurrentUserData>(context).rule < 3
+                                    Provider.of<CurrentUserDataProvider>(context).rule < 3
                                         ? Container(width: double.minPositive)
                                         : Row(
                                             children: [

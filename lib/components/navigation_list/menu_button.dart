@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:kayan_hr/components/current_user_data.dart';
-import 'package:kayan_hr/components/show_alert_dialog.dart';
+import 'package:kayan_hr/components/providers/current_user_data_provider.dart';
+import 'package:kayan_hr/components/cookbooks/show_alert_dialog.dart';
 import 'package:kayan_hr/models/user_model.dart';
-import 'package:kayan_hr/screens/create_new_admin.dart';
-import 'package:kayan_hr/screens/edit_my_account.dart';
-import 'package:kayan_hr/screens/employees.dart';
-import 'package:kayan_hr/screens/new_vacations_requests.dart';
-import 'package:kayan_hr/screens/reset_password.dart';
-import 'package:kayan_hr/screens/users.dart';
-import 'package:kayan_hr/screens/vacations_types.dart';
-import 'package:kayan_hr/components/spinner.dart';
+import 'package:kayan_hr/screens/users/create_new_admin.dart';
+import 'package:kayan_hr/screens/users/edit_my_account.dart';
+import 'package:kayan_hr/screens/employees/employees.dart';
+import 'package:kayan_hr/screens/vacations/new_vacations_requests.dart';
+import 'package:kayan_hr/screens/users/reset_password.dart';
+import 'package:kayan_hr/screens/users/users.dart';
+import 'package:kayan_hr/screens/vacations/vacations_types.dart';
+import 'package:kayan_hr/components/cookbooks/spinner.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:kayan_hr/screens/homepage.dart';
+import 'package:kayan_hr/screens/homepage/homepage.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:kayan_hr/screens/welcome.dart';
 import 'package:provider/provider.dart';
@@ -51,7 +51,7 @@ class MenuButton extends StatelessWidget {
 
   void initChoices(BuildContext context) {
     setChoices();
-    var rule = Provider.of<CurrentUserData>(context).rule;
+    var rule = Provider.of<CurrentUserDataProvider>(context).rule;
     if (rule == 1)
       choices = [
         refresh,

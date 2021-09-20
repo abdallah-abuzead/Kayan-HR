@@ -2,19 +2,19 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:kayan_hr/components/current_user_data.dart';
-import 'package:kayan_hr/components/show_snack_bar.dart';
-import 'package:kayan_hr/components/spinner.dart';
-import 'package:kayan_hr/components/employees_checkbox_list.dart';
-import 'package:kayan_hr/components/selected_employees_data.dart';
-import 'package:kayan_hr/components/validation_error.dart';
+import 'package:kayan_hr/components/providers/current_user_data_provider.dart';
+import 'package:kayan_hr/components/cookbooks/show_snack_bar.dart';
+import 'package:kayan_hr/components/cookbooks/spinner.dart';
+import 'package:kayan_hr/components/employee_checkbox_list/employees_checkbox_list.dart';
+import 'package:kayan_hr/components/providers/selected_employees_provider.dart';
+import 'package:kayan_hr/components/cookbooks/validation_error.dart';
 import 'package:kayan_hr/models/employee_model.dart';
 import 'package:kayan_hr/models/user_model.dart';
 import 'package:kayan_hr/models/vacation_model.dart';
-import 'package:kayan_hr/screens/employee_homepage.dart';
-import 'package:kayan_hr/screens/new_vacations_requests.dart';
+import 'package:kayan_hr/screens/homepage/employee_homepage.dart';
+import 'package:kayan_hr/screens/vacations/new_vacations_requests.dart';
 import 'package:provider/provider.dart';
-import 'homepage.dart';
+import '../homepage/homepage.dart';
 import 'package:kayan_hr/constants.dart';
 import 'package:intl/intl.dart';
 
@@ -101,8 +101,8 @@ class _RegisterVacationState extends State<RegisterVacation> {
       selectedEmployeeId = employee.id;
     }
 
-    return ChangeNotifierProvider<SelectedEmployeesData>(
-      create: (context) => SelectedEmployeesData(),
+    return ChangeNotifierProvider<SelectedEmployeesProvider>(
+      create: (context) => SelectedEmployeesProvider(),
       builder: (context, child) {
         return Scaffold(
           backgroundColor: Colors.white,
@@ -277,12 +277,12 @@ class _RegisterVacationState extends State<RegisterVacation> {
                               });
                             } else {
                               showSpinner(context);
-                              var rule = Provider.of<CurrentUserData>(context, listen: false).rule;
+                              var rule = Provider.of<CurrentUserDataProvider>(context, listen: false).rule;
 
                               // register vacation
                               if (selectedVacationId == '5' && args == null) {
                                 List<String> selectedEmployeesIds =
-                                    Provider.of<SelectedEmployeesData>(context, listen: false).selectedEmployeesIds;
+                                    Provider.of<SelectedEmployeesProvider>(context, listen: false).selectedEmployeesIds;
                                 selectedEmployeesIds.forEach((employeeId) async {
                                   await registerVacation(context, employeeId, noOfDays, rule >= 3 ? 2 : 1);
                                 });

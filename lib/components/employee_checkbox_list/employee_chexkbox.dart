@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:kayan_hr/components/selected_employees_data.dart';
+import 'package:kayan_hr/components/providers/selected_employees_provider.dart';
 import 'package:kayan_hr/constants.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +17,7 @@ class _EmployeeCheckboxState extends State<EmployeeCheckbox> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<SelectedEmployeesData>(
+    return Consumer<SelectedEmployeesProvider>(
       builder: (context, selectedEmployees, child) {
         return CheckboxListTile(
           title: Text((widget.employee.data() as Map)['name']),

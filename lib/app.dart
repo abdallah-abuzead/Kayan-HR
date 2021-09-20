@@ -1,29 +1,29 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:kayan_hr/components/connectivity_provider.dart';
-import 'package:kayan_hr/components/current_user_data.dart';
-import 'package:kayan_hr/screens/create_new_admin.dart';
-import 'package:kayan_hr/screens/edit_my_account.dart';
-import 'package:kayan_hr/screens/edit_user_rule.dart';
-import 'package:kayan_hr/screens/employee_homepage.dart';
-import 'package:kayan_hr/screens/login.dart';
-import 'package:kayan_hr/screens/my_new_vacations_requests.dart';
-import 'package:kayan_hr/screens/new_vacations_requests.dart';
+import 'package:kayan_hr/components/providers/connectivity_provider.dart';
+import 'package:kayan_hr/screens/users/create_new_admin.dart';
+import 'package:kayan_hr/screens/users/edit_my_account.dart';
+import 'package:kayan_hr/screens/users/edit_user_rule.dart';
+import 'package:kayan_hr/screens/homepage/employee_homepage.dart';
+import 'package:kayan_hr/screens/auth/login.dart';
+import 'package:kayan_hr/screens/vacations/my_new_vacations_requests.dart';
+import 'package:kayan_hr/screens/vacations/new_vacations_requests.dart';
 import 'package:kayan_hr/screens/no_internet.dart';
-import 'package:kayan_hr/screens/register_vacation.dart';
-import 'package:kayan_hr/screens/reset_password.dart';
-import 'package:kayan_hr/screens/sign_up.dart';
-import 'package:kayan_hr/screens/users.dart';
-import 'package:kayan_hr/screens/vacations_types.dart';
+import 'package:kayan_hr/screens/vacations/register_vacation.dart';
+import 'package:kayan_hr/screens/users/reset_password.dart';
+import 'package:kayan_hr/screens/auth/sign_up.dart';
+import 'package:kayan_hr/screens/users/users.dart';
+import 'package:kayan_hr/screens/vacations/vacations_types.dart';
 import 'package:kayan_hr/screens/welcome.dart';
 import 'package:provider/provider.dart';
+import 'components/providers/current_user_data_provider.dart';
 import 'constants.dart';
-import 'screens/add_employee.dart';
-import 'screens/edit_employee.dart';
-import 'screens/edit_vacation.dart';
-import 'screens/employee_vacations.dart';
-import 'screens/employees.dart';
-import 'screens/homepage.dart';
+import 'screens/employees/add_employee.dart';
+import 'screens/employees/edit_employee.dart';
+import 'screens/vacations/edit_vacation.dart';
+import 'screens/vacations/employee_vacations.dart';
+import 'screens/employees/employees.dart';
+import 'screens/homepage/homepage.dart';
 
 class MyApp extends StatefulWidget {
   MyApp({required this.isLogin, required this.rule});
@@ -46,7 +46,7 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<ConnectivityProvider>(create: (context) => ConnectivityProvider()),
-        ChangeNotifierProvider<CurrentUserData>(create: (context) => CurrentUserData())
+        ChangeNotifierProvider<CurrentUserDataProvider>(create: (context) => CurrentUserDataProvider())
       ],
       builder: (context, child) {
         Provider.of<ConnectivityProvider>(context).startMonitoring();

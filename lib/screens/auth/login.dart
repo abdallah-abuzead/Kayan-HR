@@ -1,13 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:kayan_hr/components/current_user_data.dart';
-import 'package:kayan_hr/components/spinner.dart';
-import 'package:kayan_hr/components/validation_error.dart';
+import 'package:kayan_hr/components/providers/current_user_data_provider.dart';
+import 'package:kayan_hr/components/cookbooks/spinner.dart';
+import 'package:kayan_hr/components/cookbooks/validation_error.dart';
 import 'package:kayan_hr/models/employee_model.dart';
-import 'package:kayan_hr/screens/employee_homepage.dart';
-import 'package:kayan_hr/screens/homepage.dart';
-import 'package:kayan_hr/screens/sign_up.dart';
+import 'package:kayan_hr/models/user_model.dart';
+import 'package:kayan_hr/screens/homepage/employee_homepage.dart';
+import 'package:kayan_hr/screens/homepage/homepage.dart';
+import 'package:kayan_hr/screens/auth/sign_up.dart';
 import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
@@ -39,10 +40,10 @@ class _LoginState extends State<Login> {
         password: password,
       );
       if (userCredential.credential == null) {
-        final employee = await EmployeeModel.getEmployeeByEmail(email);
-        Provider.of<CurrentUserData>(context, listen: false).setRule(employee['rule_id']);
+        final loggedInEmployee = await EmployeeModel.getEmployeeByEmail(UserModel.currentUserEmail);
+        Provider.of<CurrentUserDataProvider>(context, listen: false).setCurrentUserData();
         Navigator.of(context).pushNamedAndRemoveUntil(
-          employee['rule_id'] >= 3 ? HomePage.id : EmployeeHomePage.id,
+          loggedInEmployee['rule_id'] >= 3 ? HomePage.id : EmployeeHomePage.id,
           (route) => false,
         );
       }

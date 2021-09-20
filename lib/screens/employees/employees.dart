@@ -1,17 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kayan_hr/components/current_user_data.dart';
-import 'package:kayan_hr/components/loading.dart';
-import 'package:kayan_hr/components/show_alert_dialog.dart';
-import 'package:kayan_hr/components/show_snack_bar.dart';
+import 'package:kayan_hr/components/providers/current_user_data_provider.dart';
+import 'package:kayan_hr/components/cookbooks/loading.dart';
+import 'package:kayan_hr/components/cookbooks/show_alert_dialog.dart';
+import 'package:kayan_hr/components/cookbooks/show_snack_bar.dart';
 import 'package:kayan_hr/constants.dart';
 import 'package:kayan_hr/models/employee_model.dart';
-import 'package:kayan_hr/screens/edit_employee.dart';
-import 'package:kayan_hr/components/spinner.dart';
+import 'package:kayan_hr/screens/employees/edit_employee.dart';
+import 'package:kayan_hr/components/cookbooks/spinner.dart';
 import 'package:provider/provider.dart';
-import 'homepage.dart';
-import 'package:kayan_hr/screens/employee_vacations.dart';
+import '../homepage/homepage.dart';
+import 'package:kayan_hr/screens/vacations/employee_vacations.dart';
 
 class Employees extends StatefulWidget {
   const Employees({Key? key}) : super(key: key);
@@ -108,7 +108,7 @@ class _EmployeesState extends State<Employees> {
                                 padding: const EdgeInsets.only(top: 5),
                                 child: Text(employees[i]['email']),
                               ),
-                              trailing: Provider.of<CurrentUserData>(context).rule < 3
+                              trailing: Provider.of<CurrentUserDataProvider>(context).rule < 3
                                   ? Container(width: double.minPositive)
                                   : Column(
                                       mainAxisAlignment: MainAxisAlignment.end,

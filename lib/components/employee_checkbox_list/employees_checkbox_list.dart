@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:kayan_hr/components/employee_chexkbox.dart';
+import 'package:kayan_hr/components/employee_checkbox_list/employee_chexkbox.dart';
 
 class EmployeesCheckboxList extends StatelessWidget {
   EmployeesCheckboxList({required this.employees});

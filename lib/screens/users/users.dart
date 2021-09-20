@@ -2,13 +2,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:kayan_hr/components/loading.dart';
-import 'package:kayan_hr/components/show_alert_dialog.dart';
+import 'package:kayan_hr/components/cookbooks/loading.dart';
+import 'package:kayan_hr/components/cookbooks/show_alert_dialog.dart';
+import 'package:kayan_hr/components/cookbooks/show_snack_bar.dart';
 import 'package:kayan_hr/constants.dart';
 import 'package:kayan_hr/models/user_model.dart';
-import 'package:kayan_hr/components/spinner.dart';
-import 'package:kayan_hr/screens/edit_user_rule.dart';
-import 'homepage.dart';
+import 'package:kayan_hr/components/cookbooks/spinner.dart';
+import 'package:kayan_hr/screens/users/edit_user_rule.dart';
+import '../homepage/homepage.dart';
 import 'package:kayan_hr/models/employee_model.dart';
 
 class Users extends StatefulWidget {
@@ -176,13 +177,7 @@ class _UsersState extends State<Users> {
                                                       showSpinner(context);
                                                       await UserModel.deleteUser(users[i]['email']);
 
-                                                      ScaffoldMessenger.of(context).showSnackBar(
-                                                        SnackBar(
-                                                          content: Text(tr('delete_user_indicator')),
-                                                          backgroundColor: Colors.redAccent.shade100,
-                                                          duration: Duration(seconds: 2),
-                                                        ),
-                                                      );
+                                                      dangerSnackBar(context, tr('delete_user_indicator'));
 
                                                       Navigator.of(context)
                                                           .pushNamedAndRemoveUntil(HomePage.id, (route) => false);

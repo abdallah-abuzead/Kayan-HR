@@ -1,22 +1,19 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:kayan_hr/components/current_user_data.dart';
-import 'package:kayan_hr/components/loading.dart';
-// import 'package:kayan_hr/components/menu_button.dart';
-import 'package:kayan_hr/components/side_drawer.dart';
+import 'package:kayan_hr/components/cookbooks/loading.dart';
+import 'package:kayan_hr/components/providers/current_user_data_provider.dart';
+import 'package:kayan_hr/components/navigation_list/side_drawer.dart';
 import 'package:kayan_hr/constants.dart';
 import 'package:badges/badges.dart';
 import 'package:kayan_hr/models/employee_model.dart';
 import 'package:kayan_hr/models/user_model.dart';
 import 'package:kayan_hr/models/vacation_model.dart';
-import 'package:kayan_hr/screens/employee_vacations.dart';
-import 'package:kayan_hr/screens/homepage.dart';
-import 'package:kayan_hr/screens/my_new_vacations_requests.dart';
-import 'package:kayan_hr/screens/register_vacation.dart';
+import 'package:kayan_hr/screens/vacations/employee_vacations.dart';
+import 'package:kayan_hr/screens/homepage/homepage.dart';
+import 'package:kayan_hr/screens/vacations/my_new_vacations_requests.dart';
+import 'package:kayan_hr/screens/vacations/register_vacation.dart';
 import 'package:provider/provider.dart';
-
-var employee;
 
 class EmployeeHomePage extends StatefulWidget {
   const EmployeeHomePage({Key? key}) : super(key: key);
@@ -29,6 +26,7 @@ class EmployeeHomePage extends StatefulWidget {
 class _EmployeeHomePageState extends State<EmployeeHomePage> {
   Map totalUsedVacations = {};
   int totalVacationsRequests = 0;
+  var employee;
   void initUI() async {
     employee = await EmployeeModel.getEmployeeByEmail(UserModel.currentUserEmail);
     var requests = await VacationModel.getMyVacationsRequests(employee.id);
@@ -60,7 +58,7 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
         // actions: [MenuButton()],
       ),
       drawer: SideDrawer(context),
-      bottomNavigationBar: Provider.of<CurrentUserData>(context, listen: false).rule != 2
+      bottomNavigationBar: Provider.of<CurrentUserDataProvider>(context, listen: false).rule != 2
           ? null
           : BottomNavigationBar(
               onTap: (i) {
@@ -170,7 +168,7 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
                     ],
                   ),
           ),
-          Provider.of<CurrentUserData>(context, listen: false).rule == 2
+          Provider.of<CurrentUserDataProvider>(context, listen: false).rule == 2
               ? Container()
               : ElevatedButton(
                   child: Column(

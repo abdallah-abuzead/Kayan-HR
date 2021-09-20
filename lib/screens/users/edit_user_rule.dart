@@ -1,13 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kayan_hr/components/loading.dart';
-import 'package:kayan_hr/components/show_snack_bar.dart';
+import 'package:kayan_hr/components/cookbooks/loading.dart';
+import 'package:kayan_hr/components/cookbooks/show_snack_bar.dart';
 import 'package:kayan_hr/models/employee_model.dart';
 import 'package:kayan_hr/models/rule_model.dart';
-import 'package:kayan_hr/screens/users.dart';
-import 'homepage.dart';
-import 'package:kayan_hr/components/spinner.dart';
+import 'package:kayan_hr/screens/users/users.dart';
+import '../homepage/homepage.dart';
+import 'package:kayan_hr/components/cookbooks/spinner.dart';
 
 class EditUserRule extends StatefulWidget {
   const EditUserRule({Key? key}) : super(key: key);

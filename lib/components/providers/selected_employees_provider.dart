@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-class SelectedEmployeesData extends ChangeNotifier {
+class SelectedEmployeesProvider extends ChangeNotifier {
   List<String> selectedEmployeesIds = [];
 
   void add(String id) {

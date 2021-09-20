@@ -1,17 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:kayan_hr/components/current_user_data.dart';
-import 'package:kayan_hr/components/show_snack_bar.dart';
-import 'package:kayan_hr/components/spinner.dart';
-import 'package:kayan_hr/components/validation_error.dart';
+import 'package:kayan_hr/components/providers/current_user_data_provider.dart';
+import 'package:kayan_hr/components/cookbooks/show_snack_bar.dart';
+import 'package:kayan_hr/components/cookbooks/spinner.dart';
+import 'package:kayan_hr/components/cookbooks/validation_error.dart';
 import 'package:kayan_hr/models/employee_model.dart';
 import 'package:kayan_hr/models/user_model.dart';
-import 'package:kayan_hr/screens/homepage.dart';
+import 'package:kayan_hr/screens/homepage/homepage.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
 import 'package:path/path.dart';
-import '../constants.dart';
+import '../../constants.dart';
 
 class EditMyAccount extends StatefulWidget {
   const EditMyAccount({Key? key}) : super(key: key);
@@ -140,7 +140,7 @@ class _EditMyAccountState extends State<EditMyAccount> {
                         SizedBox(height: 10),
                         TextFormField(
                           initialValue: oldEmail,
-                          readOnly: Provider.of<CurrentUserData>(context).rule != 3,
+                          readOnly: Provider.of<CurrentUserDataProvider>(context).rule != 3,
                           onSaved: (value) {
                             newEmail = value;
                           },
@@ -182,7 +182,7 @@ class _EditMyAccountState extends State<EditMyAccount> {
                           ),
                         ),
                         SizedBox(height: 10),
-                        Provider.of<CurrentUserData>(context).rule < 3
+                        Provider.of<CurrentUserDataProvider>(context).rule < 3
                             ? Container()
                             : TextFormField(
                                 onTap: () async {

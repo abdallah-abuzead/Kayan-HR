@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:kayan_hr/components/spinner.dart';
+import 'package:kayan_hr/components/cookbooks/spinner.dart';
 import 'package:kayan_hr/constants.dart';
 
 class NoInternet extends StatelessWidget {

@@ -68,24 +68,24 @@ class UserModel {
   }
 
   static Future deleteUser(String email) async {
-    String currentUserEmail = UserModel.currentUserEmail;
+    String adminEmail = UserModel.currentUserEmail;
     await _userCollection.where('email', isEqualTo: email).get().then((users) async {
       if (users.docs.isNotEmpty) {
         final user = users.docs.first;
         UserCredential userCredential =
             await _auth.signInWithEmailAndPassword(email: email, password: user['password']);
-        userCredential.user?.delete();
-        _userCollection.doc(user.id).delete().then((value) => print('user deleted'));
+        await userCredential.user?.delete();
+        await _userCollection.doc(user.id).delete().then((value) => print('user deleted'));
 
-        if (currentUserEmail != email) {
+        if (adminEmail != email) {
           // admin delete other users
-          await _userCollection.where('email', isEqualTo: currentUserEmail).get().then((users) async {
+          await _userCollection.where('email', isEqualTo: adminEmail).get().then((users) async {
             final user = users.docs.first;
-            await _auth.signInWithEmailAndPassword(email: currentUserEmail, password: user['password']);
+            await _auth.signInWithEmailAndPassword(email: adminEmail, password: user['password']);
           });
         } else {
           // admin delete himself
-          final employee = await EmployeeModel.getEmployeeByEmail(currentUserEmail);
+          final employee = await EmployeeModel.getEmployeeByEmail(adminEmail);
           employee.reference.delete();
         }
       }

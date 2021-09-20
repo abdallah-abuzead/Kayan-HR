@@ -1,16 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kayan_hr/components/loading.dart';
-import 'package:kayan_hr/components/show_alert_dialog.dart';
-import 'package:kayan_hr/components/show_snack_bar.dart';
+import 'package:kayan_hr/components/cookbooks/loading.dart';
+import 'package:kayan_hr/components/cookbooks/show_alert_dialog.dart';
+import 'package:kayan_hr/components/cookbooks/show_snack_bar.dart';
 import 'package:kayan_hr/constants.dart';
 import 'package:kayan_hr/models/employee_model.dart';
 import 'package:kayan_hr/models/user_model.dart';
 import 'package:kayan_hr/models/vacation_model.dart';
-import 'package:kayan_hr/components/spinner.dart';
+import 'package:kayan_hr/components/cookbooks/spinner.dart';
 import 'edit_vacation.dart';
-import 'homepage.dart';
+import '../homepage/homepage.dart';
 
 class NewVacationsRequests extends StatefulWidget {
   const NewVacationsRequests({Key? key}) : super(key: key);
